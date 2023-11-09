@@ -21,3 +21,6 @@ class Package:
     
     def get_weight(self):
         return self.__weight
+    
+    def get_id(self):
+        return self.__id_number
