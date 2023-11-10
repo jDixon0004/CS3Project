@@ -24,3 +24,12 @@ class Package:
     
     def get_id(self):
         return self.__id_number
+    
+    def __eq__(self, o):
+        if isinstance(o, int):
+            return self.__id_number == o
+        
+        elif isinstance(o, Package):
+            return self.__id_number == o.__id_number
+        
+        return False

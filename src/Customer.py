@@ -17,3 +17,12 @@ class Customer:
     
     def get_zip_code(self):
         return self.__zip_code
+    
+    def __eq__(self, o):
+        if isinstance(o, str):
+            return self.__email == o
+        
+        elif isinstance(o, Customer):
+            return self.__email == o.__email
+        
+        return False
