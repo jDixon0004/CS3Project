@@ -1,9 +1,15 @@
 import tkinter as tk
+import os
 from tkinter import ttk
 from tkinter import messagebox
+from Customer import Customer
+from CustomerDatabase import CustomerDatabase
 
 # Dictionary to store user information
-user_data = {}
+customer = None
+
+path_ = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data/user_database.txt'))
+db = CustomerDatabase(path_)
 
 # Function to switch to the signup frame
 def show_signup():
@@ -18,8 +24,9 @@ def login():
     username = login_entry1.get()
     password = login_entry2.get()
 
-    if username in user_data and user_data[username]["password"] == password:
+    if db.user_in_database(username) and db.verify_password(username, password):
         print("Login successful")
+        customer = Customer(customer_dict=db.get_user(username))
         show_main_menu()
     else:
         messagebox.showerror("Error", "Login information not found.")
@@ -34,22 +41,21 @@ def create_account():
     state = signup_entry6.get()
     email = signup_entry7.get()
     phone = signup_entry8.get()
+    
+    '''zipcode = None
+    city = None
+    state = None
+    email = None
+    phone = None'''
 
-    user_data[username] = {
-        "password": password,
-        "address": address,
-        "zipcode": zipcode,
-        "city": city,
-        "state": state,
-        "email": email,
-        "phone": phone
-    }
-
-    # Write user data to a file
-    with open("user_info.txt", "a") as file:
-        file.write(f"Username: {username}, Password: {password}, Address: {address}, Zipcode: {zipcode}, City: {city}, State: {state}, Email: {email}, Phone: {phone}\n")
-    print("Account Created!")
-    show_main_menu()
+    if not db.user_in_database(username):
+        db.create_user(username, password, address, zipcode, city, state, phone, email)
+        customer = Customer(username, password, address, zipcode, city, state, phone, email)
+        print("Account Created!")
+        show_main_menu()
+    
+    else:
+        print("Invalid Information")
 
 # Placeholder for the main menu
 def show_main_menu():
@@ -81,6 +87,25 @@ signup_entry3 = tk.Entry(signup_frame)
 signup_entry3.pack()
 
 # ... Additional fields for zip code, city, state, email, phone
+tk.Label(signup_frame, text="Zipcode:").pack()
+signup_entry4 = tk.Entry(signup_frame)
+signup_entry4.pack()
+
+tk.Label(signup_frame, text="City:").pack()
+signup_entry5 = tk.Entry(signup_frame)
+signup_entry5.pack()
+
+tk.Label(signup_frame, text="State:").pack()
+signup_entry6 = tk.Entry(signup_frame)
+signup_entry6.pack()
+
+tk.Label(signup_frame, text="Email:").pack()
+signup_entry7 = tk.Entry(signup_frame)
+signup_entry7.pack()
+
+tk.Label(signup_frame, text="Phone:").pack()
+signup_entry8 = tk.Entry(signup_frame)
+signup_entry8.pack()
 
 # Button to trigger account creation
 signup_button = tk.Button(signup_frame, text="Sign Up", command=create_account)
