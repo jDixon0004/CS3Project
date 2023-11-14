@@ -1,43 +1,35 @@
 import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
 
 # Dictionary to store user information
 user_data = {}
 
-root = tk.Tk()
-root.title("Package2Go")
+def show_signup():
+    notebook.select(signup_frame)
 
-tk.Label(root, text="Username:").pack()  # Creates a label widget
-entry1 = tk.Entry(root) # Creates an Entry widget for username input
-entry2 = tk.Entry(root) # Creates an Entry widget for password input
-entry3 = tk.Entry(root) # Creates an Entry widget for address input
-entry4 = tk.Entry(root) # Creates an Entry widget for zipcode input
-entry5 = tk.Entry(root) # Creates an Entry widget for city input
-entry6 = tk.Entry(root) # Creates an Entry widget for state input
-entry7 = tk.Entry(root) # Creates an Entry widget for email input
-entry8 = tk.Entry(root) # Creates an Entry widget for phone input
-
-entry1.pack()  # Packs the Entry widget into the tkinter window
-
+def show_login():
+    notebook.select(login_frame)
 
 def login():
-    username = entry1.get()
-    password = entry2.get()
+    username = login_entry1.get()
+    password = login_entry2.get()
 
     if username in user_data and user_data[username]["password"] == password:
         print("Login successful")
         show_main_menu()
     else:
-        print("Login failed. Please try again")
+        messagebox.showerror("Error", "Login information not found.")
 
 def create_account():
-    username = entry1.get()
-    password = entry2.get()
-    address = entry3.get()
-    zipcode = entry4.get()
-    city = entry5.get()
-    state = entry6.get()
-    email = entry7.get()
-    phone = entry8.get()
+    username = signup_entry1.get()
+    password = signup_entry2.get()
+    address = signup_entry3.get()
+    zipcode = signup_entry4.get()
+    city = signup_entry5.get()
+    state = signup_entry6.get()
+    email = signup_entry7.get()
+    phone = signup_entry8.get()
 
     user_data[username] = {
         "password": password,
@@ -55,23 +47,72 @@ def create_account():
     show_main_menu()
 
 def show_main_menu():
-    # Destroy the current frame and create the main menu frame
-    for widget in root.winfo_children():
-        widget.destroy()
-
-    tk.Label(root, text="Welcome to the Main Menu").pack()
-    # Add your main menu elements here
+    # Implement your main menu elements here
+    pass
 
 root = tk.Tk()
 root.title("Package2Go")
 
-# ... (same as before)
+notebook = tk.ttk.Notebook(root)
 
-# Buttons
-signup_button = tk.Button(root, text="Sign Up", command=create_account)
+# Sign Up Page
+signup_frame = tk.Frame(notebook)
+
+tk.Label(signup_frame, text="Username:").pack()
+signup_entry1 = tk.Entry(signup_frame)
+signup_entry1.pack()
+
+tk.Label(signup_frame, text="Password:").pack()
+signup_entry2 = tk.Entry(signup_frame, show="*")
+signup_entry2.pack()
+
+tk.Label(signup_frame, text="Address:").pack()
+signup_entry3 = tk.Entry(signup_frame)
+signup_entry3.pack()
+
+tk.Label(signup_frame, text="Zipcode:").pack()
+signup_entry4 = tk.Entry(signup_frame)
+signup_entry4.pack()
+
+tk.Label(signup_frame, text="City:").pack()
+signup_entry5 = tk.Entry(signup_frame)
+signup_entry5.pack()
+
+tk.Label(signup_frame, text="State:").pack()
+signup_entry6 = tk.Entry(signup_frame)
+signup_entry6.pack()
+
+tk.Label(signup_frame, text="Email:").pack()
+signup_entry7 = tk.Entry(signup_frame)
+signup_entry7.pack()
+
+tk.Label(signup_frame, text="Phone:").pack()
+signup_entry8 = tk.Entry(signup_frame)
+signup_entry8.pack()
+
+signup_button = tk.Button(signup_frame, text="Sign Up", command=create_account)
 signup_button.pack()
 
-login_button = tk.Button(root, text="Login", command=login)
+notebook.add(signup_frame, text='Sign Up')
+
+# Login Page
+login_frame = tk.Frame(notebook)
+
+tk.Label(login_frame, text="Username:").pack()
+login_entry1 = tk.Entry(login_frame)
+login_entry1.pack()
+
+tk.Label(login_frame, text="Password:").pack()
+login_entry2 = tk.Entry(login_frame, show="*")
+login_entry2.pack()
+
+login_button = tk.Button(login_frame, text="Login", command=login)
 login_button.pack()
+
+notebook.add(login_frame, text='Login')
+
+notebook.pack()
+
+show_login()  # Initially show the Login page
 
 root.mainloop()
