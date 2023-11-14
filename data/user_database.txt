@@ -1,0 +1,14 @@
+{
+    "users": [
+        {
+            "username": "Batman",
+            "password": "12345",
+            "address": "1 Wayne Drive",
+            "zipcode": "11111",
+            "city": "Gotham",
+            "state": "IL",
+            "phone_number": "1234567891",
+            "email": "batman@gmail.com"
+        }
+    ]
+}
