@@ -1,13 +1,23 @@
 class Customer:
-    def __init__(self, username, password, address, zipcode, city, state, phone_number, email):
-        self.__username = username
-        self.__password = password
-        self.__adress = address
-        self.__zipcode = zipcode
-        self.__city = city
-        self.__state = state
-        self.__phone_number = phone_number
-        self.__email = email
+    def __init__(self, username=None, password=None, address=None, zipcode=None, city=None, state=None, phone_number=None, email=None, customer_dict=None):
+        if customer_dict is not None:
+            self.__username = customer_dict['username']
+            self.__password = customer_dict['password']
+            self.__address = customer_dict['address']
+            self.__zipcode = customer_dict['zipcode']
+            self.__city = customer_dict['city']
+            self.__state = customer_dict['state']
+            self.__phone_number = customer_dict['phone_number']
+            self.__email = customer_dict['email']
+        else:
+            self.__username = username
+            self.__password = password
+            self.__address = address
+            self.__zipcode = zipcode
+            self.__city = city
+            self.__state = state
+            self.__phone_number = phone_number
+            self.__email = email
 
     
     def get_username(self):
@@ -30,3 +40,4 @@ class Customer:
             return self.__email == o.__email
         
         return False
+    
