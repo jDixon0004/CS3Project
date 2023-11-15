@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
+from CustomerPackage import CustomerPackage
 
-# Assuming CustomerPackage class is defined as you provided
 
 class PackageGUI:
     def __init__(self, root):

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
-
-# Assuming CustomerPackage and AdminUserInterface classes are defined as you provided
+from AdminUserInterface import AdminUserInterface
+from CustomerPackage import CustomerPackage
 
 class PackageApp:
     def __init__(self, master):
