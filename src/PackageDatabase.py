@@ -22,7 +22,7 @@ class PackageDatabase(Database):
 
         new_package = {
             "customer_id": int(customer_id),
-            "pacakge_id": package_id,
+            "package_id": package_id,
             "recipient_name": recipient_name,
             "recipient_address": recipient_address,
             "status": status
@@ -50,9 +50,16 @@ class PackageDatabase(Database):
         self.file.seek(0)
         data = json.load(self.file)
 
+        worked = False
+
         for package in data['packages']:
             if package['package_id'] == int(package_id):
                 package['status'] = new_status
-                return True
+                worked = True
         
-        return False
+        self.file.flush()
+        self.file.seek(0)
+        json.dump(data, self.file, indent=4)
+        self.file.flush()
+        
+        return worked
