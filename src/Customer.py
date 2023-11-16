@@ -1,5 +1,5 @@
 class Customer:
-    def __init__(self, username=None, password=None, address=None, zipcode=None, city=None, state=None, phone_number=None, email=None, customer_dict=None):
+    def __init__(self, username=None, password=None, address=None, zipcode=None, city=None, state=None, phone_number=None, email=None, id=None, customer_dict=None):
         if customer_dict is not None:
             self.__username = customer_dict['username']
             self.__password = customer_dict['password']
@@ -9,6 +9,7 @@ class Customer:
             self.__state = customer_dict['state']
             self.__phone_number = customer_dict['phone_number']
             self.__email = customer_dict['email']
+            self.__id = customer_dict['id']
         else:
             self.__username = username
             self.__password = password
@@ -18,6 +19,7 @@ class Customer:
             self.__state = state
             self.__phone_number = phone_number
             self.__email = email
+            self.__id = id
 
     
     def get_username(self):
@@ -36,8 +38,11 @@ class Customer:
         if isinstance(o, str):
             return self.__email == o
         
+        elif isinstance(o, int):
+            return self.__id == o
+        
         elif isinstance(o, Customer):
-            return self.__email == o.__email
+            return self.__id == o.__id or self.__email == o.__email
         
         return False
     
