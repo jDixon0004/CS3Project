@@ -1,4 +1,5 @@
 from Database import Database
+from random import randint
 import json
 
 class CustomerDatabase(Database):
@@ -27,12 +28,14 @@ class CustomerDatabase(Database):
         
         return False
     
-    def get_user(self, username):
+    def get_user(self, username=None, id=None):
         self.file.seek(0)
         data = json.load(self.file)
 
         for user in data['users']:
-            if user['username'] == username:
+            if username is not None and user['username'] == username:
+                return user
+            elif id is not None and user['id'] == int(id):
                 return user
         
         return None
@@ -41,15 +44,26 @@ class CustomerDatabase(Database):
         self.file.seek(0)
         data = json.load(self.file)
 
+        while True:
+            temp_id = randint(0, 99999999)
+            for user in data['users']:
+                if user['id'] == temp_id:
+                    continue
+            
+            id = temp_id
+            break
+                
+
         new_user = {
             "username": username,
             "password": password,
             "address": address,
-            "zipcode": zipcode,
+            "zipcode": int(zipcode),
             "city": city,
             "state": state,
-            "phone_number": phone_number,
-            "email": email
+            "phone_number": int(phone_number),
+            "email": email,
+            "id": id
         }
 
         data['users'].append(new_user)
@@ -57,3 +71,8 @@ class CustomerDatabase(Database):
         self.file.seek(0)
         json.dump(data, self.file, indent=4)
         self.file.flush()
+
+        return id
+
+        
+
