@@ -49,8 +49,8 @@ def create_account():
     phone = None'''
 
     if not db.user_in_database(username):
-        db.create_user(username, password, address, zipcode, city, state, phone, email)
-        customer = Customer(username, password, address, zipcode, city, state, phone, email)
+        id = db.create_user(username, password, address, zipcode, city, state, phone, email)
+        customer = Customer(username, password, address, zipcode, city, state, phone, email, id)
         print("Account Created!")
         show_main_menu()
     
@@ -59,8 +59,44 @@ def create_account():
 
 # Placeholder for the main menu
 def show_main_menu():
-    # Implement your main menu elements here
-    pass
+    # Destroy the current frame and create the main menu frame
+    for widget in root.winfo_children():
+        widget.destroy()
+
+    tk.Label(root, text="Welcome to the Main Menu").pack()
+    # Add your main menu elements here
+
+    tk.Button(root, text="Make An Order", command=None).pack()
+    tk.Button(root, text="Check Order", command=check_order).pack()
+    tk.Button(root, text="Account Details", command=None).pack()
+
+def make_order():
+    # Destroy the current frame and create the main menu frame
+    for widget in root.winfo_children():
+        widget.destroy()
+
+    tk.Label(root, text="Make an Order").pack()
+    # Add your main menu elements here
+
+def check_order():
+    # Destroy the current frame and create the main menu frame
+    for widget in root.winfo_children():
+        widget.destroy()
+
+    tk.Label(root, text="Check Order").pack()
+    # Add your main menu elements here
+    tk.Button(root, text="Check Order Details", command=None).pack()
+    tk.Button(root, text="Cancel Order", command=None).pack()
+    tk.Button(root, text="Status of Order", command=None).pack()
+
+def account_details():
+    # Destroy the current frame and create the main menu frame
+    for widget in root.winfo_children():
+        widget.destroy()
+
+    tk.Label(root, text="Account Details").pack()
+    # Add your main menu elements here
+
 
 # Create the main Tkinter window
 root = tk.Tk()
