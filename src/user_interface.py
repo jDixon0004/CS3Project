@@ -26,6 +26,7 @@ def login():
 
     if db.user_in_database(username) and db.verify_password(username, password):
         print("Login successful")
+        global customer
         customer = Customer(customer_dict=db.get_user(username))
         show_main_menu()
     else:
@@ -68,7 +69,7 @@ def show_main_menu():
 
     tk.Button(root, text="Make An Order", command=None).pack()
     tk.Button(root, text="Check Order", command=check_order).pack()
-    tk.Button(root, text="Account Details", command=None).pack()
+    tk.Button(root, text="Account Details", command=account_details).pack()
 
 def make_order():
     # Destroy the current frame and create the main menu frame
@@ -94,8 +95,25 @@ def account_details():
     for widget in root.winfo_children():
         widget.destroy()
 
-    tk.Label(root, text="Account Details").pack()
+    tk.Label(root, text="Account Details").grid(row=0, column=1)
     # Add your main menu elements here
+    tk.Label(root, text="Username").grid(row=1, column=0)
+    tk.Label(root, text="Address").grid(row=2, column=0)
+    tk.Label(root, text="City").grid(row=3, column=0)
+    tk.Label(root, text="State").grid(row=4, column=0)
+    tk.Label(root, text="Zipcode").grid(row=5, column=0)
+    tk.Label(root, text="Phone Number").grid(row=6, column=0)
+    tk.Label(root, text="Email Address").grid(row=7, column=0)
+    tk.Label(root, text="Customer ID").grid(row=8, column=0)
+
+    tk.Label(root, text="{}".format(customer.get_username())).grid(row=1, column=2)
+    tk.Label(root, text="{}".format(customer.get_address())).grid(row=2, column=2)
+    tk.Label(root, text="{}".format(customer.get_city())).grid(row=3, column=2)
+    tk.Label(root, text="{}".format(customer.get_state())).grid(row=4, column=2)
+    tk.Label(root, text="{}".format(customer.get_zipcode())).grid(row=5, column=2)
+    tk.Label(root, text="{}".format(customer.get_phone_number())).grid(row=6, column=2)
+    tk.Label(root, text="{}".format(customer.get_email())).grid(row=7, column=2)
+    tk.Label(root, text="{}".format(customer.get_id())).grid(row=8, column=2)
 
 
 # Create the main Tkinter window
