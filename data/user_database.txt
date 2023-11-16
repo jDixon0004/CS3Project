@@ -2,14 +2,14 @@
     "users": [
         {
             "username": "BWayne",
-            "password": "12345",
+            "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
             "address": "1 Wayne Manor Drive",
-            "zipcode": "11111",
+            "zipcode": 11111,
             "city": "Gotham",
             "state": "IL",
-            "phone_number": "0123456789",
-            "email": "brucewayne@gmail.com",
-            "id": 82900266
+            "phone_number": 123456789,
+            "email": "bwayne@gmail.com",
+            "id": 15872066
         }
     ]
 }
