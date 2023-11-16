@@ -2,7 +2,6 @@ class Customer:
     def __init__(self, username=None, password=None, address=None, zipcode=None, city=None, state=None, phone_number=None, email=None, id=None, customer_dict=None):
         if customer_dict is not None:
             self.__username = customer_dict['username']
-            self.__password = customer_dict['password']
             self.__address = customer_dict['address']
             self.__zipcode = customer_dict['zipcode']
             self.__city = customer_dict['city']
@@ -33,6 +32,18 @@ class Customer:
     
     def get_zipcode(self):
         return self.__zipcode
+    
+    def get_address(self):
+        return self.__address
+    
+    def get_city(self):
+        return self.__city
+    
+    def get_state(self):
+        return self.__state
+    
+    def get_id(self):
+        return self.__id
     
     def __eq__(self, o):
         if isinstance(o, str):
