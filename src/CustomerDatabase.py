@@ -81,5 +81,30 @@ class CustomerDatabase(Database):
 
         return id
 
+    def update_user(self, username, address, zipcode, city, state, phone_number, email, id):
+        self.file.seek(0)
+        data = json.load(self.file)
+
+        for i in range(len(data['users'])):
+            if id is not None and data['users'][i]['id'] == int(id):
+                data['users'][i] = {
+                    "username": username,
+                    "password": data['users'][i]['password'],
+                    "address": address,
+                    "zipcode": int(zipcode),
+                    "city": city,
+                    "state": state,
+                    "phone_number": int(phone_number),
+                    "email": email,
+                    "id": id
+                }
+                self.file.seek(0)
+                json.dump(data, self.file, indent=4)
+                self.file.flush()
+
+                return True
+        
+        return False
+
         
 

@@ -51,7 +51,7 @@ def create_account():
 
     if not db.user_in_database(username):
         id = db.create_user(username, password, address, zipcode, city, state, phone, email)
-        customer = Customer(username, password, address, zipcode, city, state, phone, email, id)
+        customer = Customer(username, address, zipcode, city, state, phone, email, id)
         print("Account Created!")
         show_main_menu()
     
@@ -114,6 +114,73 @@ def account_details():
     tk.Label(root, text="{}".format(customer.get_phone_number())).grid(row=6, column=2)
     tk.Label(root, text="{}".format(customer.get_email())).grid(row=7, column=2)
     tk.Label(root, text="{}".format(customer.get_id())).grid(row=8, column=2)
+
+    tk.Button(root, text="Edit Account Details", command=edit_account).grid(row=9, column=1)
+    tk.Button(root, text="Change Password", command=change_password).grid(row=10, column=1)
+
+def edit_account():
+    for widget in root.winfo_children():
+        widget.destroy()
+    
+    tk.Label(root, text="Update Account Details").grid(row=0, column=1)
+    # Add your main menu elements here
+    tk.Label(root, text="Username").grid(row=1, column=0)
+    tk.Label(root, text="Address").grid(row=2, column=0)
+    tk.Label(root, text="City").grid(row=3, column=0)
+    tk.Label(root, text="State").grid(row=4, column=0)
+    tk.Label(root, text="Zipcode").grid(row=5, column=0)
+    tk.Label(root, text="Phone Number").grid(row=6, column=0)
+    tk.Label(root, text="Email Address").grid(row=7, column=0)
+
+    username_var = tk.StringVar(root, value=customer.get_username())
+    address_var = tk.StringVar(root, value=customer.get_address())
+    city_var = tk.StringVar(root, value=customer.get_city())
+    state_var = tk.StringVar(root, value=customer.get_state())
+    zipcode_var = tk.StringVar(root, value=customer.get_zipcode())
+    phone_var = tk.StringVar(root, value=customer.get_phone_number())
+    email_var = tk.StringVar(root, value=customer.get_email())
+    
+    
+    username_entry = tk.Entry(root, textvariable=username_var)
+    username_entry.grid(row=1, column=2)
+
+    address_entry = tk.Entry(root, textvariable=address_var)
+    address_entry.grid(row=2, column=2)
+
+    city_entry = tk.Entry(root, textvariable=city_var)
+    city_entry.grid(row=3, column=2)
+
+    state_entry = tk.Entry(root, textvariable=state_var)
+    state_entry.grid(row=4, column=2)
+
+    zipcode_entry = tk.Entry(root, textvariable=zipcode_var)
+    zipcode_entry.grid(row=5, column=2)
+
+    phone_number_entry = tk.Entry(root, textvariable=phone_var)
+    phone_number_entry.grid(row=6, column=2)
+
+    email_entry = tk.Entry(root, textvariable=email_var)
+    email_entry.grid(row=7, column=2)
+
+    tk.Button(root, text="Update Details", command= lambda: update_account_details(username_entry.get(), address_entry.get(), city_entry.get(), state_entry.get(), zipcode_entry.get(), phone_number_entry.get(), email_entry.get())).grid(row=8, column=1)
+
+def update_account_details(username, address, city, state, zipcode, phone_number, email):
+    global customer
+    success = db.update_user(username, address, zipcode, city, state, phone_number, email, customer.get_id())
+    if success:
+        customer = Customer(username, address, zipcode, city, state, phone_number, email, customer.get_id())
+        print("Account Updated!")
+    else:
+        print("Failed to Update Account")
+    
+    account_details()
+
+
+def change_password():
+    pass
+
+
+
 
 
 # Create the main Tkinter window

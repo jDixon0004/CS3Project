@@ -1,5 +1,5 @@
 class Customer:
-    def __init__(self, username=None, password=None, address=None, zipcode=None, city=None, state=None, phone_number=None, email=None, id=None, customer_dict=None):
+    def __init__(self, username=None, address=None, zipcode=None, city=None, state=None, phone_number=None, email=None, id=None, customer_dict=None):
         if customer_dict is not None:
             self.__username = customer_dict['username']
             self.__address = customer_dict['address']
@@ -11,7 +11,6 @@ class Customer:
             self.__id = customer_dict['id']
         else:
             self.__username = username
-            self.__password = password
             self.__address = address
             self.__zipcode = zipcode
             self.__city = city
