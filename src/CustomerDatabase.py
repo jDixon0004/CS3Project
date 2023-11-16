@@ -1,6 +1,7 @@
 from Database import Database
 from random import randint
 import json
+import hashlib
 
 class CustomerDatabase(Database):
     def __init__(self, pathname):
@@ -20,9 +21,12 @@ class CustomerDatabase(Database):
         self.file.seek(0)
         data = json.load(self.file)
 
+        hasher = hashlib.sha256()
+        hasher.update(bytes(password, 'utf-8'))
+
         for user in data['users']:
             if user['username'] == username:
-                if user['password'] == password:
+                if user['password'] == hasher.hexdigest():
                     return True
                 return False
         
@@ -52,11 +56,14 @@ class CustomerDatabase(Database):
             
             id = temp_id
             break
+        
+        hasher = hashlib.sha256()
+        hasher.update(bytes(password, 'utf-8'))
                 
 
         new_user = {
             "username": username,
-            "password": password,
+            "password": hasher.hexdigest(),
             "address": address,
             "zipcode": int(zipcode),
             "city": city,
