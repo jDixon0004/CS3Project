@@ -1,12 +1,15 @@
 {
     "packages": [
         {
-            "customer_id": 82900266,
-            "package_id": 71839380,
-            "recipient_name": "Dick Grayson",
-            "recipient_address": "1234 1st Street",
+            "customer_id": 15872066,
+            "package_id": 29007911,
+            "recipient_name": "Clark Kent",
+            "recipient_address": "111 1st Street",
+            "recipient_city": "Metropolis",
+            "recipient_state": "NY",
+            "recipient_zipcode": 12345,
+            "weight": 0.5,
             "status": "Order Recieved"
         }
     ]
-} 
-
+}
