@@ -4,12 +4,15 @@ from tkinter import ttk
 from tkinter import messagebox
 from Customer import Customer
 from CustomerDatabase import CustomerDatabase
+from PackageDatabase import PackageDatabase
 
 # Dictionary to store user information
 customer = None
 
 path_ = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data/user_database.txt'))
+package_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data/package_database.txt'))
 db = CustomerDatabase(path_)
+package_db = PackageDatabase(package_path)
 
 # Function to switch to the signup frame
 def show_signup():
@@ -67,7 +70,7 @@ def show_main_menu():
     tk.Label(root, text="Welcome to the Main Menu").pack()
     # Add your main menu elements here
 
-    tk.Button(root, text="Make An Order", command=None).pack()
+    tk.Button(root, text="Make An Order", command=make_order).pack()
     tk.Button(root, text="Check Order", command=check_order).pack()
     tk.Button(root, text="Account Details", command=account_details).pack()
 
@@ -76,8 +79,40 @@ def make_order():
     for widget in root.winfo_children():
         widget.destroy()
 
-    tk.Label(root, text="Make an Order").pack()
+    tk.Label(root, text="Make an Order").grid(row=0, column=1)
     # Add your main menu elements here
+    tk.Label(root, text="Recipient Name").grid(row=1, column=0)
+    tk.Label(root, text="Recipient Address").grid(row=2, column=0)
+    tk.Label(root, text="Recipient City").grid(row=3, column=0)
+    tk.Label(root, text="Recipient State").grid(row=4, column=0)
+    tk.Label(root, text="Recipient Zipcode").grid(row=5, column=0)
+    tk.Label(root, text="Package Weight (lbs)").grid(row=6, column=0)
+
+    name_entry = tk.Entry(root)
+    name_entry.grid(row=1, column=2)
+
+    address_entry = tk.Entry(root)
+    address_entry.grid(row=2, column=2)
+
+    city_entry = tk.Entry(root)
+    city_entry.grid(row=3, column=2)
+
+    state_entry = tk.Entry(root)
+    state_entry.grid(row=4, column=2)
+
+    zipcode_entry = tk.Entry(root)
+    zipcode_entry.grid(row=5, column=2)
+
+    weight_entry = tk.Entry(root)
+    weight_entry.grid(row=6, column=2)
+
+    tk.Button(root, text="Place Order", command= lambda: place_order(name_entry.get(), address_entry.get(), city_entry.get(), state_entry.get(), zipcode_entry.get(), weight_entry.get())).grid(row=7, column=1)
+
+def place_order(name, address, city, state, zipcode, weight):
+    package_db.create_package(customer.get_id(), name, address, city, state, zipcode, weight)
+    messagebox.showinfo("Order Confirmation", "Order Placed Successfully")
+    show_main_menu()
+
 
 def check_order():
     # Destroy the current frame and create the main menu frame
