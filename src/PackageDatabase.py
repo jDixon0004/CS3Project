@@ -51,17 +51,17 @@ class PackageDatabase(Database):
         return None
     
     def update_status(self, package_id, new_status):
+        # ***CAUTION*** Messes up format of JSON file (adds extra brackets at the end), so those must be deleted manually 
         self.file.seek(0)
         data = json.load(self.file)
 
         worked = False
 
-        for package in data['packages']:
-            if package['package_id'] == int(package_id):
-                package['status'] = new_status
+        for i in range(len(data['packages'])):
+            if data['packages'][i]['package_id'] == int(package_id):
+                data['packages'][i]['status'] = new_status
                 worked = True
         
-        self.file.flush()
         self.file.seek(0)
         json.dump(data, self.file, indent=4)
         self.file.flush()
