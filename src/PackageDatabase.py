@@ -6,7 +6,7 @@ class PackageDatabase(Database):
     def __init__(self, pathname):
         super().__init__(pathname)
     
-    def create_package(self, customer_id, recipient_name, recipient_address, status='Order Recieved'):
+    def create_package(self, customer_id, recipient_name, recipient_address, recipient_city, recipient_state, recipient_zipcode, weight, status='Order Recieved'):
         self.file.seek(0)
         data = json.load(self.file)
 
@@ -25,6 +25,10 @@ class PackageDatabase(Database):
             "package_id": package_id,
             "recipient_name": recipient_name,
             "recipient_address": recipient_address,
+            "recipient_city": recipient_city,
+            "recipient_state": recipient_state,
+            "recipient_zipcode": int(recipient_zipcode),
+            "weight": float(weight),
             "status": status
         }
 
